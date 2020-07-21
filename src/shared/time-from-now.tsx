@@ -25,7 +25,6 @@ const TimeFromNow = (
     const intervalId = setInterval(() => {
       const timeView = fromNow(timeObject);
       setTimeView(timeView);
-      console.log(timeView);
     }, 60000);
 
     return () => {

@@ -9,7 +9,7 @@ import Login from './login';
 
 
 const useStyles = makeStyles(theme => {
-  console.log(theme);
+  // console.log(theme);
 
   return {
     appBar: {
@@ -118,7 +118,6 @@ function App() {
     });
 
     socket.on('reconnect_attempt', () => {
-      console.log('reconnecting...')
       socket.io.opts.query = {
         nickname
       };
