@@ -1,12 +1,13 @@
 import { Box } from '@material-ui/core';
 import React, { useEffect, useLayoutEffect, useReducer, useRef } from 'react';
-import ChatItem from './chat-item';
+import ChatMassage from './chat-message';
 import { chatInitialState, chatReducer } from './chat.state';
 import { ChatActionType, IMessage, lastMessages } from './chat.types';
+import ConnectionMessage from './connection-message';
 import NewMessage from './new-message';
 
 
-export default function Chat({ nickname, socket }: { nickname: string, socket: SocketIOClient.Socket}) {
+export default function Chat({ nickname, socket }: { nickname: string, socket: SocketIOClient.Socket }) {
 
   const [
     { messages, avatarColorsMap },
@@ -68,18 +69,42 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
     <>
       <Box overflow="auto" flexGrow={1} paddingRight={2}>
         {
-          messages.map((message, index) => (
-            <ChatItem
-              key={index}
-              nickname={nickname}
-              message={message}
-              avatarColorsMap={avatarColorsMap}
-            />
-          ))
+          messages.map(
+            ({ type, from = '', time, content = '', name }, index
+            ) => {
+              switch (type) {
+                case 'message':
+                  return (
+                    <ChatMassage
+                      key={index}
+                      nickname={nickname}
+                      from={from}
+                      time={time}
+                      content={content}
+                      avatarColorsMap={avatarColorsMap}
+                    />
+                  );
+
+                case 'user connected':
+                case 'user disconnected':
+                  return (
+                    <ConnectionMessage
+                      key={index}
+                      type={type}
+                      name={name}
+                      time={time}
+                      nickname={nickname}
+                    />
+                  );
+              }
+            })
         }
+        <div ref={ref} />
       </Box>
-      <div ref={ref} />
-      <NewMessage sendMessage={sendMessage} />
+
+      <NewMessage
+        sendMessage={sendMessage}
+      />
     </>
   );
 };

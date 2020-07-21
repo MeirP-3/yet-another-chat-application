@@ -3,7 +3,6 @@ export interface IMessage {
   type?: 'message' | 'user connected' | 'user disconnected'
   from?: string
   content?: string
-  nickname?: string
   name?: string
 };
 

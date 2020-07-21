@@ -5,7 +5,7 @@ export default function Login({ setNickname, error }: any) {
   const [nickname, changeNickname] = useState('');
 
   const onClick = () => {
-    setNickname(nickname);
+    setNickname(nickname.trim());
   };
 
   return (
@@ -15,7 +15,7 @@ export default function Login({ setNickname, error }: any) {
         onSubmit={e => e.preventDefault()}
       >
         <TextField
-          placeholder="Enter nickname"
+          placeholder="Enter temporary nickname"
           variant="outlined"
           value={nickname}
           fullWidth

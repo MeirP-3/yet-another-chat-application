@@ -1,6 +1,6 @@
 import { Box, IconButton, makeStyles, TextField } from '@material-ui/core';
 import { Send as IconSend } from '@material-ui/icons';
-import React, { useState } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import { INewMessageProps } from './chat.types';
 
 const useStyles = makeStyles(theme => ({
@@ -15,8 +15,6 @@ const NewMessage = ({ sendMessage }: INewMessageProps) => {
   const classes = useStyles();
 
   const [newMessage, setNewMessage] = useState('');
-
-
 
   const send = () => {
     sendMessage(newMessage);
@@ -42,18 +40,28 @@ const NewMessage = ({ sendMessage }: INewMessageProps) => {
         onChange={
           ({ target: { value } }) => setNewMessage(value)
         }
-        onKeyPress={e => e.keyCode === 13 && (e.preventDefault(), !!newMessage && send())}
+        onKeyPress={
+          e =>
+            e.key === 'Enter'
+            &&
+            (
+              e.preventDefault(),
+              !!newMessage
+              &&
+              send()
+            )
+        }
       />
 
       <IconButton
         type="submit"
         color="primary"
-        
+
         onClick={() => !!newMessage && send()}
       >
         <IconSend className={classes.iconButton} />
       </IconButton>
-      </Box>
+    </Box>
   );
 };
 
