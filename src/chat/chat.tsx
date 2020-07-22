@@ -1,13 +1,22 @@
 import { Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useLayoutEffect, useReducer, useRef } from 'react';
+import useSimpleAudio from 'use-simple-audio';
 import ChatMassage from './chat-message';
 import { chatInitialState, chatReducer } from './chat.state';
 import { ChatActionType, IMessage, lastMessages } from './chat.types';
 import ConnectionMessage from './connection-message';
 import NewMessage from './new-message';
+import { customScrollbar } from '../theme/scrollbar';
 
+const useStyles = makeStyles({
+  customScrollbar
+});
 
 export default function Chat({ nickname, socket }: { nickname: string, socket: SocketIOClient.Socket }) {
+  const classes = useStyles();
+
+  const { play, stop } = useSimpleAudio('/beep.mp3');
 
   const [
     { messages, avatarColorsMap },
@@ -26,6 +35,11 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
     });
 
     socket.on('message', (message: IMessage) => {
+
+      if (message.type === 'message') {
+        play();
+      }
+
       dispatch({
         type: ChatActionType.MessageReceived,
         payload: message
@@ -36,7 +50,7 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
       socket.disconnect();
     };
 
-  }, [socket]);
+  }, [socket, play, stop]);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -67,7 +81,12 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
 
   return (
     <>
-      <Box overflow="auto" flexGrow={1} paddingRight={2}>
+      <Box
+        overflow="auto"
+        flexGrow={1}
+        paddingRight={2}
+        className={classes.customScrollbar}
+      >
         {
           messages.map(
             ({ type, from = '', time, content = '', name }, index

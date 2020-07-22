@@ -1,6 +1,7 @@
 import React from 'react';
 import { IMessage } from './chat.types';
-import { Box, Paper, Typography, makeStyles } from '@material-ui/core';
+import { Box, Paper, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import TimeFromNow from '../shared/time-from-now';
 
 
@@ -25,7 +26,7 @@ const ConnectionMessage = ({ type, time, name, nickname }: IMessage & { nickname
     case 'user disconnected':
       verb = 'disconnected';
       break;
-    
+
     default:
       throw new Error(`got wrong type ${type} for this component`);
   }
@@ -38,7 +39,7 @@ const ConnectionMessage = ({ type, time, name, nickname }: IMessage & { nickname
         </Typography>
       </Paper>
       <Typography variant="caption" color="textSecondary">
-        <TimeFromNow time={time}/>
+        <TimeFromNow time={time} />
       </Typography>
     </Box>
   );

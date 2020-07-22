@@ -1,15 +1,17 @@
-import { AppBar, Box, Container, CssBaseline, IconButton, LinearProgress, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import { blueGrey } from '@material-ui/core/colors';
+import { Box, Fab, LinearProgress, CircularProgress } from '@material-ui/core';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import React, { useEffect, useState } from 'react';
+import { Helmet } from "react-helmet";
 import io from 'socket.io-client';
 import { apiConfig } from './backend/backend.config';
 import Chat from './chat/chat';
 import Login from './login';
+import { theme } from './theme';
 
 
 const useStyles = makeStyles(theme => {
-  // console.log(theme);
+  console.log(theme);
 
   return {
     appBar: {
@@ -23,22 +25,43 @@ const useStyles = makeStyles(theme => {
       justifyContent: 'center',
       alignItems: 'center',
       height: '100%',
-      backgroundColor: blueGrey['100'],
+      backgroundImage: 'url(/bg.png)',
+      backgroundSize: 'cover'
     },
     root: {
+      position: 'relative',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      maxHeight: '900px'
+      width: theme.breakpoints.values['sm'],
+      [theme.breakpoints.up('sm')]: {
+        width: theme.breakpoints.values['md']
+      },
+      [theme.breakpoints.up('md')]: {
+        width: theme.breakpoints.values['lg']
+      },
+    },
+    fab: {
+      position: 'absolute',
+      top: theme.spacing(4),
+      right: theme.spacing(4),
+    },
+    exitIcon: {
+      marginRight: theme.spacing(1)
     },
     main: {
-      backgroundColor: theme.palette.grey[200],
       flexGrow: 1,
       overflow: 'auto',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      padding: theme.spacing(1, 0, 0, 2)
+      paddingTop: theme.spacing(1)
+    },
+    circularProgress: {
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
     }
   };
 });
@@ -104,6 +127,12 @@ function App() {
     }
 
     socket.on('error', (error: string) => {
+      if (typeof error !== 'string') {
+        throw new Error('Received non string error from socket');
+      }
+
+      console.log('socket error:', error)
+
       logOut();
       setError(error);
       setIsLoading(false);
@@ -129,36 +158,36 @@ function App() {
   }, [socket, nickname]);
 
   return (
-    // <ThemeProvider theme={theme}>
-    <Box className={classes.bg}>
-    <CssBaseline />
-    <Container className={classes.root} maxWidth="md">
-      <AppBar position="relative" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Chat app
-          </Typography>
-          <IconButton color="inherit" onClick={logOut}>
-            <ExitToAppIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <ThemeProvider theme={theme}>
 
-      {isLoading && <LinearProgress />}
+      <Helmet>
+        <meta name="theme-color" content={theme.palette.primary.dark} />
+      </Helmet>
+      
+      <Box className={classes.bg}>
+        <Box className={classes.root}>
+          {
+            isLoggedIn
+            &&
+            <Fab color="secondary" variant="extended" className={classes.fab} onClick={logOut}>
+              <ExitToAppIcon className={classes.exitIcon}/>
+              Exit
+            </Fab>
+          }
 
-      <Box className={classes.main}>
-        {
-          !isLoading
-          &&
-          (isLoggedIn && socket ?
-            <Chat nickname={nickname} socket={socket} />
-            :
-            <Login setNickname={setNickname} error={error} />)
-        }
+          {isLoading && <CircularProgress className={classes.circularProgress}/>}
+
+          <Box className={classes.main}>
+            {
+              isLoggedIn && socket ?
+                <Chat nickname={nickname} socket={socket} />
+                :
+                <Login setNickname={setNickname} isLoading={isLoading} error={error} />
+            }
+          </Box>
+        </Box>
       </Box>
-    </Container>
-    </Box>
-    // </ThemeProvider>
+    </ThemeProvider>
   );
 }
 

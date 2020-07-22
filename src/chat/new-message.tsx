@@ -1,12 +1,18 @@
-import { Box, IconButton, makeStyles, TextField } from '@material-ui/core';
+import { Box, IconButton, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Send as IconSend } from '@material-ui/icons';
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
 import { INewMessageProps } from './chat.types';
 
 const useStyles = makeStyles(theme => ({
   iconButton: {
     width: '3rem',
     height: '3rem'
+  },
+  form: {
+    opacity: 0.8,
+    padding: theme.spacing(0, 1),
+    borderRadius: theme.spacing(1)
   }
 }));
 
@@ -28,10 +34,13 @@ const NewMessage = ({ sendMessage }: INewMessageProps) => {
       display="flex"
       justifyContent="space-between"
       alignItems="center"
+      bgcolor="white"
+      className={classes.form}
     >
       <TextField
         placeholder="Type a message"
         variant="outlined"
+        
         autoFocus
         fullWidth
         multiline

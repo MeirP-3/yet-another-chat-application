@@ -1,4 +1,5 @@
-import { Avatar, Box, makeStyles, Paper, Typography, Theme, Color } from '@material-ui/core';
+import { Avatar, Box, Paper, Typography, Theme, Color } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { IChatMessageProps } from './chat.types';
 import { orange, purple, blue, yellow, green, red, pink, brown } from '@material-ui/core/colors';
@@ -71,7 +72,7 @@ const ChatMassage = (
           {from}
         </Typography>
         <Typography variant="caption" color="secondary">
-          <TimeFromNow time={time}/>
+          <TimeFromNow time={time} />
         </Typography>
         <Typography>
           {content}
