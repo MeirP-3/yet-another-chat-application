@@ -25,8 +25,9 @@ const useStyles = makeStyles(theme => {
       justifyContent: 'center',
       alignItems: 'center',
       height: '100%',
-      backgroundImage: 'url(/bg.png)',
-      backgroundSize: 'cover'
+      backgroundImage: 'url(/bg-grey.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     root: {
       position: 'relative',
@@ -45,6 +46,7 @@ const useStyles = makeStyles(theme => {
       position: 'absolute',
       top: theme.spacing(4),
       right: theme.spacing(4),
+      zIndex: 1
     },
     exitIcon: {
       marginRight: theme.spacing(1)

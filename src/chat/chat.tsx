@@ -85,6 +85,7 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
         overflow="auto"
         flexGrow={1}
         paddingRight={2}
+        paddingLeft={2}
         className={classes.customScrollbar}
       >
         {

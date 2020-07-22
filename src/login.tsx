@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 
 const useStyle = makeStyles({
   dialogPaper: {
-    backgroundColor: 'lightgoldenrodyellow'
+    // backgroundColor: 'lightgoldenrodyellow'
   }
 });
 
@@ -41,29 +41,29 @@ export default function Login({ setNickname, error, isLoading }: any) {
       <img
         src={'/icon.png'}
         alt="logo"
-        style={{ height: 180, maxWidth: 320 }}
+        style={{ height: 120, maxWidth: 320 }}
       />
       <Typography component="div">
         <Box
-          fontStyle="oblique"
           fontWeight={200}
           fontSize="h3.fontSize"
           textAlign="center"
-          color="common.white"
-        >
-          Welcome to Public Chat Room
+          marginTop={3}
+          marginBottom={2}
+          >
+          Welcome
         </Box>
         <Box
           fontSize="h5.fontSize"
+          fontWeight={100}
           textAlign="center"
-          color="common.white"
+          fontStyle="oblique"
         >
-          Come up with a nickname and join the party
+          Public Chat Room
             </Box>
       </Typography>
 
       <Button
-        autoFocus
         style={{ margin: 30, borderRadius: '40px' }}
         variant="contained"
         color="secondary"
@@ -75,8 +75,10 @@ export default function Login({ setNickname, error, isLoading }: any) {
       <Dialog classes={{
         paper: classes.dialogPaper
       }} open={open} onClose={onClose}>
-        <DialogTitle>
-          Your nickname?
+        <DialogTitle style={{paddingBottom: '0'}}>
+          <Typography color="primary" variant="h5">
+            Your nickname?
+          </Typography>
         </DialogTitle>
 
         <form onSubmit={e => e.preventDefault()}>
@@ -89,6 +91,7 @@ export default function Login({ setNickname, error, isLoading }: any) {
                 width: '300px'
               }}
               autoFocus
+              color="primary"
               onChange={({ target: { value } }) => changeNickname(value)}
               error={!!error}
               helperText={error}
