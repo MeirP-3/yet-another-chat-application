@@ -63,7 +63,8 @@ const useStyles = makeStyles(theme => {
       position: 'fixed',
       top: '50%',
       left: '50%',
-      transform: 'translate(-50%, -50%)'
+      marginRight: '-50%',
+      zIndex: theme.zIndex.tooltip
     }
   };
 });
