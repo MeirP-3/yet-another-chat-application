@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
   red: paint(theme, red),
   pink: paint(theme, pink),
   brown: paint(theme, brown),
+  paperRoot: {
+    backgroundColor: theme.palette.grey['300']
+  }
 }));
 
 
@@ -40,14 +43,11 @@ const ChatMassage = (
 ) => {
   const classes = useStyles();
 
-  let bgcolor,
-    flexDirection;
+  let flexDirection;
 
   if (from === nickname) {
-    bgcolor = 'grey.300';
     flexDirection = 'row-reverse';
   } else {
-    bgcolor = 'background.paper';
     flexDirection = 'row';
   }
 
@@ -66,12 +66,12 @@ const ChatMassage = (
         maxWidth="700px"
         padding={1}
         component={Paper}
-        bgcolor={bgcolor}
+        className={clsx(nickname === from && classes.paperRoot)}
       >
         <Typography variant="subtitle2" color="primary">
           {from}
         </Typography>
-        <Typography variant="caption" color="secondary">
+        <Typography variant="caption" color="textSecondary">
           <TimeFromNow time={time} />
         </Typography>
         <Typography>

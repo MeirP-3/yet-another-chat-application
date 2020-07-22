@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      paddingTop: theme.spacing(1)
+      paddingTop: theme.spacing(2)
     },
     circularProgress: {
       position: 'fixed',

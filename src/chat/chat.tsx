@@ -8,6 +8,7 @@ import { ChatActionType, IMessage, lastMessages } from './chat.types';
 import ConnectionMessage from './connection-message';
 import NewMessage from './new-message';
 import { customScrollbar } from '../theme/scrollbar';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles({
   customScrollbar
@@ -37,6 +38,7 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
     socket.on('message', (message: IMessage) => {
 
       if (message.type === 'message') {
+        console.log('playing...')
         play();
       }
 
@@ -81,6 +83,9 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
 
   return (
     <>
+      <Helmet>
+        <title>Public Chat room</title>
+      </Helmet>
       <Box
         overflow="auto"
         flexGrow={1}

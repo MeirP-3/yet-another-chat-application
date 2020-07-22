@@ -76,9 +76,9 @@ export default function Login({ setNickname, error, isLoading }: any) {
         paper: classes.dialogPaper
       }} open={open} onClose={onClose}>
         <DialogTitle style={{paddingBottom: '0'}}>
-          <Typography color="primary" variant="h5">
+          <Box color="primary">
             Your nickname?
-          </Typography>
+          </Box>
         </DialogTitle>
 
         <form onSubmit={e => e.preventDefault()}>
@@ -103,6 +103,7 @@ export default function Login({ setNickname, error, isLoading }: any) {
               type="submit"
               color="primary"
               onClick={onClose}
+              disabled={!nickname}
             >
               Enter
           </Button>
