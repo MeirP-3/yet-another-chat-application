@@ -158,7 +158,7 @@ function App() {
     <ThemeProvider theme={theme}>
 
       <Helmet>
-        <meta name="theme-color" content={theme.palette.primary.dark} />
+        <meta name="theme-color" content={theme.palette.secondary.dark} />
       </Helmet>
       
       <Box className={classes.bg}>
