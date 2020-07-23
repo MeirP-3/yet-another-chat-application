@@ -3,7 +3,8 @@ export interface IMessage {
   type?: 'message' | 'user connected' | 'user disconnected'
   from?: string
   content?: string
-  name?: string
+  name?: string,
+  createdAt?: number
 };
 
 export interface IMessagesProps {
@@ -32,7 +33,7 @@ export interface ChatState {
 
 export interface IChatMessageProps {
   from: string,
-  time: number,
+  time: number | undefined,
   content: string,
   nickname: string,
   avatarColorsMap: any

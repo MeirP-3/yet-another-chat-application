@@ -52,7 +52,7 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
       socket.disconnect();
     };
 
-  }, [socket, play, stop]);
+  }, [socket]);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -95,7 +95,7 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
       >
         {
           messages.map(
-            ({ type, from = '', time, content = '', name }, index
+            ({ type, from = '', time, createdAt, content = '', name }, index
             ) => {
               switch (type) {
                 case 'message':
@@ -104,7 +104,7 @@ export default function Chat({ nickname, socket }: { nickname: string, socket: S
                       key={index}
                       nickname={nickname}
                       from={from}
-                      time={time}
+                      time={time || createdAt}
                       content={content}
                       avatarColorsMap={avatarColorsMap}
                     />
