@@ -9,7 +9,7 @@ const fromNow = (
 
 
 const TimeFromNow = (
-  { time }: { time: number }
+  { time }: { time: number  | undefined}
 ) => {
   const [timeObject, setTimeObject] = useState(() => moment(time));
 
