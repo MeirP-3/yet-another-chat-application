@@ -11,15 +11,9 @@ import { theme } from './theme';
 
 
 const useStyles = makeStyles(theme => {
-  console.log(theme);
+  //console.log(theme);
 
   return {
-    appBar: {
-      boxShadow: 'none'
-    },
-    title: {
-      flexGrow: 1
-    },
     bg: {
       display: 'flex',
       justifyContent: 'center',
